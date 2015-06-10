@@ -71,11 +71,21 @@
 		}
 
 		// Ensure paste functionality
-		if ( !config['plugins'] ) {
-			config['plugins'] = [ 'paste' ];
-		} else if ( $.inArray( 'paste', config['plugins'] ) === -1 ) {
-			config['plugins'].push( 'paste' );
-		}
+        if (!config['plugins']) {
+            config['plugins'] = ['paste'];
+        } else {
+            var hasPaste = false;
+            for (var i = 0; i < config['plugins'].length; i++) {
+                var plagins = config['plugins'][i].split(' ');
+                if ($.inArray('paste', plagins) !== -1) {
+                    hasPaste = true;
+                    break;
+                }
+            }
+            if (!hasPaste) {
+                config['plugins'].push('paste');
+            }
+        }
 
 		// Define change handler
 		var applyChange = function( editor ) {
